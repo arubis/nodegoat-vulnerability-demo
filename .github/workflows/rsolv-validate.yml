@@ -1,0 +1,36 @@
+name: RSOLV Validate Issue
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to validate'
+        required: true
+        type: string
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  validate-issue:
+    runs-on: ubuntu-latest
+    # Only run when rsolv:validate label is added
+    if: |
+      (github.event.label.name == 'rsolv:validate') ||
+      (github.event_name == 'workflow_dispatch')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: RSOLV Validate - Enrich Issue
+        uses: RSOLV-dev/rsolv-action@v3.1.1
+        with:
+          api_key: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'validate'  # Only run validation phase
+          issue_number: ${{ github.event.issue.number || inputs.issue_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
