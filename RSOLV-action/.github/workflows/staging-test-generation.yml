@@ -1,0 +1,341 @@
+name: RSOLV Staging - Test Generation Validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_url:
+        description: 'API URL to test against'
+        required: false
+        default: 'https://api.rsolv-staging.com'
+        type: choice
+        options:
+          - 'https://api.rsolv-staging.com'
+          - 'http://localhost:4000'
+      test_scenario:
+        description: 'Test scenario to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - 'all'
+          - 'javascript-sql-injection'
+          - 'python-command-injection'
+          - 'ruby-xss'
+          - 'php-path-traversal'
+          - 'java-xxe'
+          - 'fix-iteration'
+      enable_test_generation:
+        description: 'Enable test generation'
+        required: false
+        default: true
+        type: boolean
+      enable_fix_validation:
+        description: 'Enable fix validation with tests'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  create-test-issue:
+    runs-on: ubuntu-latest
+    outputs:
+      issue_number: ${{ steps.create_issue.outputs.issue_number }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Create test issue based on scenario
+        id: create_issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const scenarios = {
+              'javascript-sql-injection': {
+                title: '[STAGING] Fix SQL injection in user authentication',
+                body: `## Security Vulnerability: SQL Injection
+                
+                There's a SQL injection vulnerability in the login function at \`auth.js:45\`.
+                The user input is directly concatenated into the SQL query.
+                
+                ### Vulnerable Code:
+                \`\`\`javascript
+                // auth.js:45
+                const query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'";
+                db.query(query, callback);
+                \`\`\`
+                
+                ### Expected Fix:
+                Use parameterized queries or prepared statements.`,
+                labels: ['rsolv:staging-test', 'security', 'sql-injection']
+              },
+              'python-command-injection': {
+                title: '[STAGING] Fix command injection in file processor',
+                body: `## Security Vulnerability: Command Injection
+                
+                Command injection vulnerability in \`processor.py:78\` where user input is passed to os.system().
+                
+                ### Vulnerable Code:
+                \`\`\`python
+                # processor.py:78
+                def process_file(filename):
+                    os.system(f"convert {filename} output.pdf")
+                \`\`\``,
+                labels: ['rsolv:staging-test', 'security', 'command-injection']
+              },
+              'ruby-xss': {
+                title: '[STAGING] Fix XSS in comment rendering',
+                body: `## Security Vulnerability: Cross-Site Scripting (XSS)
+                
+                XSS vulnerability in \`comments_controller.rb:23\` where user comments are rendered without escaping.
+                
+                ### Vulnerable Code:
+                \`\`\`ruby
+                # comments_controller.rb:23
+                def show
+                  @comment = Comment.find(params[:id])
+                  render html: @comment.body.html_safe
+                end
+                \`\`\``,
+                labels: ['rsolv:staging-test', 'security', 'xss']
+              },
+              'php-path-traversal': {
+                title: '[STAGING] Fix path traversal in file download',
+                body: `## Security Vulnerability: Path Traversal
+                
+                Path traversal vulnerability in \`download.php:15\` allowing access to arbitrary files.
+                
+                ### Vulnerable Code:
+                \`\`\`php
+                // download.php:15
+                $file = $_GET['file'];
+                $path = "/var/www/uploads/" . $file;
+                readfile($path);
+                \`\`\``,
+                labels: ['rsolv:staging-test', 'security', 'path-traversal']
+              },
+              'java-xxe': {
+                title: '[STAGING] Fix XXE in XML parser',
+                body: `## Security Vulnerability: XML External Entity (XXE)
+                
+                XXE vulnerability in \`XmlParser.java:42\` where external entities are not disabled.
+                
+                ### Vulnerable Code:
+                \`\`\`java
+                // XmlParser.java:42
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc = db.parse(new InputSource(new StringReader(xmlString)));
+                \`\`\``,
+                labels: ['rsolv:staging-test', 'security', 'xxe']
+              },
+              'fix-iteration': {
+                title: '[STAGING] Complex vulnerability requiring iteration',
+                body: `## Security Vulnerability: Complex SQL Injection
+                
+                This is a complex SQL injection that might require multiple fix attempts.
+                The vulnerability is in a stored procedure call with multiple injection points.
+                
+                ### Vulnerable Code:
+                \`\`\`javascript
+                // complex-query.js:156
+                const query = \`
+                  CALL getUserData(
+                    '\${userId}',
+                    '\${sortBy}',
+                    '\${filterType}'
+                  )
+                \`;
+                db.query(query);
+                \`\`\`
+                
+                Note: This might need multiple iterations to fix properly.`,
+                labels: ['rsolv:staging-test', 'security', 'sql-injection', 'fix-validation-max-5']
+              }
+            };
+            
+            const scenario = '${{ inputs.test_scenario }}';
+            let issueData;
+            
+            if (scenario === 'all') {
+              // Create multiple issues
+              const createdIssues = [];
+              for (const [key, data] of Object.entries(scenarios)) {
+                const issue = await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: data.title,
+                  body: data.body,
+                  labels: data.labels
+                });
+                createdIssues.push(issue.data.number);
+                console.log(`Created issue #${issue.data.number} for ${key}`);
+              }
+              core.setOutput('issue_number', createdIssues.join(','));
+              return createdIssues;
+            } else {
+              issueData = scenarios[scenario];
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issueData.title,
+                body: issueData.body,
+                labels: issueData.labels
+              });
+              
+              console.log(`Created issue #${issue.data.number}`);
+              core.setOutput('issue_number', issue.data.number);
+              return issue.data.number;
+            }
+
+  test-rsolv-action:
+    needs: create-test-issue
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Create staging config
+        run: |
+          cat > .github/rsolv-staging.yml << EOF
+          apiKey: \${{ secrets.RSOLV_STAGING_API_KEY }}
+          issueLabel: 'rsolv:staging-test'
+          enableSecurityAnalysis: true
+          fixValidation:
+            enabled: ${{ inputs.enable_fix_validation }}
+            maxIterations: 5
+            maxIterationsByType:
+              sql-injection: 5
+              xss: 4
+              command-injection: 5
+              path-traversal: 4
+              xxe: 3
+            maxIterationsByTier:
+              enterprise: 10
+              pro: 5
+              free: 3
+          EOF
+      
+      - name: Test RSOLV Action with Test Generation
+        uses: ./
+        with:
+          api_key: ${{ secrets.RSOLV_STAGING_API_KEY || secrets.RSOLV_API_KEY }}
+          api_url: ${{ inputs.api_url }}
+          config_path: '.github/rsolv-staging.yml'
+          issue_label: 'rsolv:staging-test'
+          issue_number: ${{ needs.create-test-issue.outputs.issue_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_TEST_GENERATION: ${{ inputs.enable_test_generation }}
+          ENABLE_FIX_VALIDATION: ${{ inputs.enable_fix_validation }}
+          RSOLV_DEBUG: 'true'
+          TEST_GEN_LANGUAGES: 'javascript,typescript,python,ruby,php,java'
+          
+      - name: Validate Results
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Wait for PR creation
+            await new Promise(resolve => setTimeout(resolve, 10000));
+            
+            const issueNumbers = '${{ needs.create-test-issue.outputs.issue_number }}'.split(',');
+            
+            for (const issueNum of issueNumbers) {
+              // Check if PR was created
+              const prs = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open'
+              });
+              
+              const relatedPR = prs.data.find(pr => 
+                pr.body && pr.body.includes(`#${issueNum}`)
+              );
+              
+              if (relatedPR) {
+                console.log(`✅ PR created for issue #${issueNum}: #${relatedPR.number}`);
+                
+                // Check if PR includes test code
+                const prFiles = await github.rest.pulls.listFiles({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: relatedPR.number
+                });
+                
+                const hasTestFile = prFiles.data.some(file => 
+                  file.filename.includes('test') || 
+                  file.filename.includes('spec')
+                );
+                
+                if (hasTestFile) {
+                  console.log(`✅ PR #${relatedPR.number} includes test files`);
+                } else if ('${{ inputs.enable_test_generation }}' === 'true') {
+                  console.log(`⚠️  PR #${relatedPR.number} does not include test files`);
+                }
+                
+                // Check PR description for test validation results
+                if (relatedPR.body.includes('Test Results:')) {
+                  console.log(`✅ PR #${relatedPR.number} includes test validation results`);
+                }
+              } else {
+                console.log(`❌ No PR found for issue #${issueNum}`);
+              }
+            }
+  
+  cleanup:
+    needs: [create-test-issue, test-rsolv-action]
+    runs-on: ubuntu-latest
+    if: always()
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Cleanup test issues and PRs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issueNumbers = '${{ needs.create-test-issue.outputs.issue_number }}'.split(',');
+            
+            for (const issueNum of issueNumbers) {
+              // Close the issue
+              try {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: parseInt(issueNum),
+                  state: 'closed'
+                });
+                console.log(`Closed issue #${issueNum}`);
+              } catch (e) {
+                console.log(`Failed to close issue #${issueNum}: ${e.message}`);
+              }
+              
+              // Close related PRs
+              const prs = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open'
+              });
+              
+              const relatedPRs = prs.data.filter(pr => 
+                pr.body && pr.body.includes(`#${issueNum}`)
+              );
+              
+              for (const pr of relatedPRs) {
+                try {
+                  await github.rest.pulls.update({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: pr.number,
+                    state: 'closed'
+                  });
+                  console.log(`Closed PR #${pr.number}`);
+                } catch (e) {
+                  console.log(`Failed to close PR #${pr.number}: ${e.message}`);
+                }
+              }
+            }

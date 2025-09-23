@@ -1,0 +1,93 @@
+name: 'RSOLV Issue Automation with Enhanced Context'
+description: 'Automates fixing issues in your repository using AI with deep context gathering'
+author: 'RSOLV Team'
+branding:
+  icon: 'zap'
+  color: 'purple'
+inputs:
+  api_key:
+    description: 'RSOLV API key for authentication'
+    required: true
+  config_path:
+    description: 'Path to RSOLV configuration file'
+    required: false
+    default: '.github/rsolv.yml'
+  issue_label:
+    description: 'Label to identify issues for automation'
+    required: false
+    default: 'rsolv:automate'
+  environment_variables:
+    description: 'JSON string of environment variables to pass to the container'
+    required: false
+  
+  # Enhanced context options
+  enable_deep_context:
+    description: 'Enable deep context gathering with Claude Code'
+    required: false
+    default: 'true'
+  enable_ultra_think:
+    description: 'Enable ultra-think mode for more thorough analysis'
+    required: false
+    default: 'true'
+  context_depth:
+    description: 'Depth of context gathering (shallow, medium, deep, ultra)'
+    required: false
+    default: 'ultra'
+  context_timeout:
+    description: 'Maximum time for context gathering in milliseconds'
+    required: false
+    default: '300000'
+  
+  # Context analysis options
+  analyze_architecture:
+    description: 'Analyze repository architecture and patterns'
+    required: false
+    default: 'true'
+  analyze_test_patterns:
+    description: 'Analyze testing frameworks and patterns'
+    required: false
+    default: 'true'
+  analyze_style_guide:
+    description: 'Analyze code style and conventions'
+    required: false
+    default: 'true'
+  analyze_dependencies:
+    description: 'Analyze dependencies and their usage'
+    required: false
+    default: 'true'
+  
+  # Performance options
+  cache_context:
+    description: 'Cache context results for similar issues'
+    required: false
+    default: 'true'
+  context_cache_duration:
+    description: 'Context cache duration in milliseconds'
+    required: false
+    default: '3600000'
+  max_parallel_explorations:
+    description: 'Maximum parallel context explorations'
+    required: false
+    default: '3'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    RSOLV_API_KEY: ${{ inputs.api_key }}
+    RSOLV_CONFIG_PATH: ${{ inputs.config_path }}
+    RSOLV_ISSUE_LABEL: ${{ inputs.issue_label }}
+    RSOLV_ENVIRONMENT_VARIABLES: ${{ inputs.environment_variables }}
+    
+    # Enhanced context environment variables
+    RSOLV_ENABLE_DEEP_CONTEXT: ${{ inputs.enable_deep_context }}
+    RSOLV_ENABLE_ULTRA_THINK: ${{ inputs.enable_ultra_think }}
+    RSOLV_CONTEXT_DEPTH: ${{ inputs.context_depth }}
+    RSOLV_CONTEXT_TIMEOUT: ${{ inputs.context_timeout }}
+    RSOLV_ANALYZE_ARCHITECTURE: ${{ inputs.analyze_architecture }}
+    RSOLV_ANALYZE_TEST_PATTERNS: ${{ inputs.analyze_test_patterns }}
+    RSOLV_ANALYZE_STYLE_GUIDE: ${{ inputs.analyze_style_guide }}
+    RSOLV_ANALYZE_DEPENDENCIES: ${{ inputs.analyze_dependencies }}
+    RSOLV_CACHE_CONTEXT: ${{ inputs.cache_context }}
+    RSOLV_CONTEXT_CACHE_DURATION: ${{ inputs.context_cache_duration }}
+    RSOLV_MAX_PARALLEL_EXPLORATIONS: ${{ inputs.max_parallel_explorations }}

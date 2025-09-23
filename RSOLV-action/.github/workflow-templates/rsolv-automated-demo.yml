@@ -1,0 +1,79 @@
+# RSOLV Automated Demo Workflow
+#
+# This workflow demonstrates fully automated end-to-end security scanning and fixing.
+# In demo mode, it automatically progresses through all three phases without human intervention.
+#
+# Phases:
+#   1. SCAN: Detects vulnerabilities and creates issues
+#   2. VALIDATE: Performs AST validation (triggered by label)
+#   3. MITIGATE: Generates fixes and creates PRs (triggered by label)
+
+name: RSOLV Automated Security Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      auto_fix:
+        description: 'Automatically fix detected issues'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  # ========================================
+  # PHASE 1: VULNERABILITY SCANNING
+  # ========================================
+  scan-vulnerabilities:
+    name: Phase 1 - Scan for Vulnerabilities
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run RSOLV Security Scan
+        id: scan
+        uses: RSOLV-dev/rsolv-action@main
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'scan'
+          scan_mode: 'scan'  # Create issues for detected vulnerabilities
+          enable_security_analysis: 'true'
+          max_issues: '5'  # Limit for demo purposes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # When auto_fix is true, automatically add rsolv:automate label
+          RSOLV_DEMO_MODE: ${{ github.event.inputs.auto_fix || 'true' }}
+
+      - name: Display Scan Results
+        run: |
+          echo "📊 Scan Complete!"
+          echo "Issues created: ${{ steps.scan.outputs.created_issues }}"
+          if [ "${{ github.event.inputs.auto_fix }}" = "true" ]; then
+            echo "🤖 Demo mode enabled - issues will be automatically fixed"
+          else
+            echo "📝 Manual mode - add 'rsolv:automate' label to issues to trigger fixes"
+          fi
+
+  # ========================================
+  # PHASE 2: VALIDATION (Label Triggered)
+  # ========================================
+  # This job is defined in a separate workflow file (rsolv-validate.yml)
+  # It triggers when the rsolv:validate label is added to an issue
+
+  # ========================================
+  # PHASE 3: MITIGATION (Label Triggered)
+  # ========================================
+  # This job is defined in a separate workflow file (rsolv-fix-issues.yml)
+  # It triggers when the rsolv:automate label is added to an issue
+
+# Companion workflow files needed:
+# - .github/workflows/rsolv-validate.yml (triggers on rsolv:validate label)
+# - .github/workflows/rsolv-fix-issues.yml (triggers on rsolv:automate label)

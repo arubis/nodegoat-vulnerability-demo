@@ -1,0 +1,58 @@
+name: Pattern Availability Check
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/security/**'
+      - 'src/scanner/**'
+      - 'test/regression/**'
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run daily to catch any API degradation
+    - cron: '0 0 * * *'
+
+jobs:
+  pattern-check:
+    runs-on: ubuntu-latest
+    name: Verify Pattern Availability
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+          
+      - name: Install dependencies
+        run: bun install
+        
+      - name: Run pattern regression tests
+        run: |
+          echo "🔍 Running pattern availability regression tests..."
+          bun test test/regression/pattern-availability.test.ts
+        env:
+          # Don't use API key for minimal pattern baseline tests
+          USE_LOCAL_PATTERNS: 'false'
+          
+      - name: Check with API patterns (if available)
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "🌐 Testing with API patterns..."
+          bun test test/regression/pattern-availability.test.ts
+        env:
+          RSOLV_API_KEY: ${{ secrets.RSOLV_API_KEY }}
+          
+      - name: Verify minimal patterns fail loudly
+        run: |
+          echo "🚨 Testing minimal pattern failure mode..."
+          # This should output loud warnings/errors
+          USE_LOCAL_PATTERNS=true bun run src/scanner/test-pattern-source.ts || true
+          
+      - name: Test CI failure mode
+        run: |
+          echo "💥 Testing CI failure on minimal patterns..."
+          # This should fail the CI if set
+          USE_FAIL_ON_MINIMAL_PATTERNS=true USE_LOCAL_PATTERNS=true bun run src/scanner/test-pattern-source.ts && exit 1 || echo "✅ Correctly failed on minimal patterns"

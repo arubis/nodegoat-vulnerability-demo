@@ -1,0 +1,4 @@
+[test]
+# Minimal test configuration
+timeout = 30000
+bail = false

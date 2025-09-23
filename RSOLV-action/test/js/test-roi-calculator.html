@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROI Calculator Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .test-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .test-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .test-result {
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .failure {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .test-controls {
+      margin-bottom: 15px;
+    }
+    input, select {
+      padding: 8px;
+      margin-right: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0069d9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>ROI Calculator Tests</h1>
+  
+  <div class="test-section">
+    <div class="test-label">1. Test calculateRoi Function</div>
+    <div class="test-controls">
+      <input type="number" id="team-size-input" value="10" min="1" max="100" placeholder="Team Size">
+      <input type="number" id="avg-salary-input" value="150000" min="50000" max="500000" placeholder="Avg Salary">
+      <input type="number" id="platform-count-input" value="2" min="1" max="4" placeholder="Platform Count">
+      <input type="number" id="monthly-issues-input" value="50" min="1" max="200" placeholder="Monthly Issues">
+      <button id="calculate-btn">Calculate</button>
+    </div>
+    <div id="calculation-result" class="test-result"></div>
+  </div>
+  
+  <div class="test-section">
+    <div class="test-label">2. Test ROI Calculator Integration</div>
+    <div class="test-controls">
+      <button id="run-integration-test">Run Integration Test</button>
+    </div>
+    <div id="integration-result" class="test-result"></div>
+  </div>
+
+  <div class="test-section">
+    <div class="test-label">3. Mock ROI Calculator UI</div>
+    <div id="roi-calculator">
+      <div class="calculator-form">
+        <div>
+          <label for="team-size">Engineering Team Size</label>
+          <select id="team-size">
+            <option value="5">5 Engineers</option>
+            <option value="10" selected>10 Engineers</option>
+            <option value="25">25 Engineers</option>
+            <option value="50">50 Engineers</option>
+            <option value="100">100+ Engineers</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="avg-salary">Average Annual Salary</label>
+          <select id="avg-salary">
+            <option value="120000">$120,000</option>
+            <option value="150000" selected>$150,000</option>
+            <option value="180000">$180,000</option>
+            <option value="200000">$200,000</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="platform-count">Ticket Systems</label>
+          <select id="platform-count">
+            <option value="1">1 System</option>
+            <option value="2" selected>2 Systems</option>
+            <option value="3">3 Systems</option>
+            <option value="4">4+ Systems</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="monthly-issues">Monthly Issues</label>
+          <input 
+            type="range" 
+            id="monthly-issues" 
+            min="10" 
+            max="200" 
+            value="50" 
+            step="10"
+          />
+          <div id="monthly-issues-value">50 issues/month</div>
+        </div>
+      </div>
+      
+      <div class="calculator-results">
+        <div>Annual Engineering Cost: <span id="annual-cost">$1,500,000</span></div>
+        <div>Platform Context Switching: <span id="context-switching">15%</span></div>
+        <div>Security & Compliance Overhead: <span id="security-overhead">10%</span></div>
+        <div>Annual Inefficiency Cost: <span id="inefficiency-cost">$375,000</span></div>
+        
+        <div>Productivity Improvement: <span id="platform-savings">12%</span></div>
+        <div>Security Enhancement: <span id="security-enhancement">8%</span></div>
+        <div>Annual RSOLV Cost: <span id="rsolv-cost">$8,400</span></div>
+        <div>Net Annual Savings: <span id="annual-savings">$291,600</span></div>
+        
+        <div>Jira Savings: <span id="jira-savings">$54,000</span></div>
+        <div>Linear Savings: <span id="linear-savings">$67,500</span></div>
+        <div>GitHub Savings: <span id="github-savings">$90,000</span></div>
+        <div>GitLab Savings: <span id="gitlab-savings">$80,100</span></div>
+        
+        <div>ROI: <span id="roi">3471%</span></div>
+        <div>Payback Period: <span id="payback">~0.4 months</span></div>
+        
+        <div>Your Pricing Tier: <span id="pricing-tier">Dual Platform ($14/fix)</span></div>
+        <div>Monthly Fixes: <span id="monthly-fixes">40</span></div>
+        
+        <div>Your Cost: <span id="percent-cost">3%</span></div>
+        <div>Your Savings: <span id="percent-savings">97%</span></div>
+        
+        <div id="savings-bar" style="width: 95%"></div>
+        <div id="cost-bar" style="width: 5%"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the ROI calculator function
+    import { calculateRoi, initRoiCalculator } from '../../assets/js/roi_calculator.js';
+    
+    // Test 1: Calculate ROI Function
+    const calculateBtn = document.getElementById('calculate-btn');
+    const resultDiv = document.getElementById('calculation-result');
+    
+    calculateBtn.addEventListener('click', function() {
+      const teamSize = parseInt(document.getElementById('team-size-input').value, 10);
+      const avgSalary = parseInt(document.getElementById('avg-salary-input').value, 10);
+      const platformCount = parseInt(document.getElementById('platform-count-input').value, 10);
+      const monthlyIssues = parseInt(document.getElementById('monthly-issues-input').value, 10);
+      
+      try {
+        // Calculate ROI
+        const result = calculateRoi({
+          teamSize,
+          avgSalary,
+          platformCount,
+          monthlyIssues
+        });
+        
+        // Display results
+        resultDiv.innerHTML = `<h3>Calculation Results:</h3>
+        <table>
+          <tr><th>Metric</th><th>Value</th></tr>
+          <tr><td>Annual Cost</td><td>$${result.annualCost.toLocaleString()}</td></tr>
+          <tr><td>Context Switching</td><td>${(result.contextSwitching * 100).toFixed(0)}%</td></tr>
+          <tr><td>Security Overhead</td><td>${(result.securityOverhead * 100).toFixed(0)}%</td></tr>
+          <tr><td>Inefficiency Cost</td><td>$${result.inefficiencyCost.toLocaleString()}</td></tr>
+          <tr><td>Platform Savings</td><td>${(result.platformSavings * 100).toFixed(0)}%</td></tr>
+          <tr><td>Security Enhancement</td><td>${(result.securityEnhancement * 100).toFixed(0)}%</td></tr>
+          <tr><td>RSOLV Cost</td><td>$${result.rsolvCost.toLocaleString()}</td></tr>
+          <tr><td>Annual Savings</td><td>$${result.annualSavings.toLocaleString()}</td></tr>
+          <tr><td>Monthly Fixes</td><td>${result.monthlyFixes}</td></tr>
+          <tr><td>Price Per Fix</td><td>$${result.pricePerFix}</td></tr>
+          <tr><td>Tier Name</td><td>${result.tierName}</td></tr>
+          <tr><td>ROI</td><td>${result.roi.toFixed(0)}%</td></tr>
+          <tr><td>Payback Months</td><td>${result.paybackMonths.toFixed(1)}</td></tr>
+        </table>`;
+        
+        resultDiv.classList.add('success');
+        resultDiv.classList.remove('failure');
+      } catch (error) {
+        resultDiv.textContent = `Error: ${error.message}`;
+        resultDiv.classList.add('failure');
+        resultDiv.classList.remove('success');
+      }
+    });
+    
+    // Test 2: Integration Test
+    const runIntegrationBtn = document.getElementById('run-integration-test');
+    const integrationResult = document.getElementById('integration-result');
+    
+    runIntegrationBtn.addEventListener('click', function() {
+      try {
+        // Initialize the calculator
+        initRoiCalculator();
+        
+        // Verify initial values
+        const initialValues = captureCalculatorValues();
+        
+        // Change team size and verify update
+        document.getElementById('team-size').value = '25';
+        document.getElementById('team-size').dispatchEvent(new Event('change'));
+        
+        // Get updated values after change
+        const updatedValues = captureCalculatorValues();
+        
+        // Verify changes
+        if (initialValues.annualCost === updatedValues.annualCost) {
+          throw new Error('Calculator did not update when team size changed');
+        }
+        
+        // Log results
+        integrationResult.innerHTML = `<h3>Integration Test Results:</h3>
+        <h4>Initial Values:</h4>
+        <table>
+          ${renderValueTable(initialValues)}
+        </table>
+        
+        <h4>Updated Values (Team Size = 25):</h4>
+        <table>
+          ${renderValueTable(updatedValues)}
+        </table>
+        
+        <p>✅ Calculator successfully updated values when form inputs changed</p>`;
+        
+        integrationResult.classList.add('success');
+        integrationResult.classList.remove('failure');
+      } catch (error) {
+        integrationResult.textContent = `Error: ${error.message}`;
+        integrationResult.classList.add('failure');
+        integrationResult.classList.remove('success');
+      }
+    });
+    
+    // Helper function to capture all calculator values
+    function captureCalculatorValues() {
+      return {
+        annualCost: document.getElementById('annual-cost').textContent,
+        contextSwitching: document.getElementById('context-switching').textContent,
+        securityOverhead: document.getElementById('security-overhead').textContent,
+        inefficiencyCost: document.getElementById('inefficiency-cost').textContent,
+        platformSavings: document.getElementById('platform-savings').textContent,
+        securityEnhancement: document.getElementById('security-enhancement').textContent,
+        rsolvCost: document.getElementById('rsolv-cost').textContent,
+        annualSavings: document.getElementById('annual-savings').textContent,
+        roi: document.getElementById('roi').textContent,
+        payback: document.getElementById('payback').textContent,
+        pricingTier: document.getElementById('pricing-tier').textContent,
+        monthlyFixes: document.getElementById('monthly-fixes').textContent
+      };
+    }
+    
+    // Helper function to render a table of values
+    function renderValueTable(values) {
+      let html = '';
+      for (const [key, value] of Object.entries(values)) {
+        html += `<tr><td>${key}</td><td>${value}</td></tr>`;
+      }
+      return html;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+[
+  {
+    "testCaseId": "test-case-1",
+    "title": "Fix the timestamp format in the logger",
+    "type": "bug",
+    "complexity": "low",
+    "standard": {
+      "accuracy": {
+        "score": 42,
+        "maxScore": 100,
+        "percentage": 42
+      },
+      "filesReferenced": [
+        "src/logger.js"
+      ],
+      "timeTaken": 1530.9150200522763
+    },
+    "claudeCode": {
+      "accuracy": {
+        "score": 89,
+        "maxScore": 100,
+        "percentage": 89
+      },
+      "filesReferenced": [
+        "src/logger.js"
+      ],
+      "timeTaken": 3258.8171339822757
+    }
+  },
+  {
+    "testCaseId": "test-case-2",
+    "title": "Fix reference to User model in Product schema",
+    "type": "bug",
+    "complexity": "medium",
+    "standard": {
+      "accuracy": {
+        "score": 62,
+        "maxScore": 100,
+        "percentage": 62
+      },
+      "filesReferenced": [
+        "src/models/product.js"
+      ],
+      "timeTaken": 2029.4646974252335
+    },
+    "claudeCode": {
+      "accuracy": {
+        "score": 88,
+        "maxScore": 100,
+        "percentage": 88
+      },
+      "filesReferenced": [
+        "src/models/product.js",
+        "src/models/user.js"
+      ],
+      "timeTaken": 2871.839119842719
+    }
+  },
+  {
+    "testCaseId": "test-case-3",
+    "title": "Add pagination to product listing endpoint",
+    "type": "enhancement",
+    "complexity": "medium",
+    "standard": {
+      "accuracy": {
+        "score": 44,
+        "maxScore": 100,
+        "percentage": 44
+      },
+      "filesReferenced": [
+        "src/routes/product.js",
+        "src/models/product.js"
+      ],
+      "timeTaken": 2146.379867494511
+    },
+    "claudeCode": {
+      "accuracy": {
+        "score": 89,
+        "maxScore": 100,
+        "percentage": 89
+      },
+      "filesReferenced": [
+        "src/routes/product.js",
+        "src/models/product.js"
+      ],
+      "timeTaken": 2671.048937549609
+    }
+  },
+  {
+    "testCaseId": "test-case-4",
+    "title": "Add email validation for user creation",
+    "type": "enhancement",
+    "complexity": "medium",
+    "standard": {
+      "accuracy": {
+        "score": 61,
+        "maxScore": 100,
+        "percentage": 61
+      },
+      "filesReferenced": [
+        "src/models/user.js",
+        "src/routes/user.js"
+      ],
+      "timeTaken": 2452.998247136394
+    },
+    "claudeCode": {
+      "accuracy": {
+        "score": 91,
+        "maxScore": 100,
+        "percentage": 91
+      },
+      "filesReferenced": [
+        "src/models/user.js",
+        "src/routes/user.js"
+      ],
+      "timeTaken": 2958.2198084210827
+    }
+  },
+  {
+    "testCaseId": "test-case-5",
+    "title": "Prevent duplicate user registration",
+    "type": "bug",
+    "complexity": "medium",
+    "standard": {
+      "accuracy": {
+        "score": 44,
+        "maxScore": 100,
+        "percentage": 44
+      },
+      "filesReferenced": [
+        "src/routes/user.js",
+        "src/models/user.js"
+      ],
+      "timeTaken": 1671.3638252616129
+    },
+    "claudeCode": {
+      "accuracy": {
+        "score": 78,
+        "maxScore": 100,
+        "percentage": 78
+      },
+      "filesReferenced": [
+        "src/routes/user.js",
+        "src/models/user.js"
+      ],
+      "timeTaken": 2934.1315514459475
+    }
+  }
+]

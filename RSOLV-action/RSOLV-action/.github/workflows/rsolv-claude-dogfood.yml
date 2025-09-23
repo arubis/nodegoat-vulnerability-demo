@@ -1,0 +1,68 @@
+name: RSOLV Claude Code Dogfood
+on:
+  issues:
+    types: [opened, edited, labeled]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  analyze-and-fix:
+    if: |
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'rsolv:automate')) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@rsolv')) ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Analyze with RSOLV Security
+      id: security-analysis
+      uses: ./
+      with:
+        api_key: ${{ secrets.RSOLV_API_KEY }}
+        issue_label: 'rsolv:automate'
+        mode: 'analyze-only'  # Just analyze, don't create PR
+        enable_security_analysis: true
+      
+    - name: Create PR with Claude Code
+      if: steps.security-analysis.outputs.has_issues == 'true'
+      uses: anthropics/claude-code-action@beta
+      with:
+        anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+        prompt: |
+          Fix the issue: ${{ github.event.issue.title }}
+          
+          Issue Description:
+          ${{ github.event.issue.body }}
+          
+          Security Analysis:
+          ${{ steps.security-analysis.outputs.security_findings }}
+          
+          Please create a PR that:
+          1. Fixes the security vulnerability or issue described
+          2. Follows security best practices
+          3. Includes appropriate tests if applicable
+          4. Updates documentation if needed
+          
+          Use the CLAUDE.md file for project guidelines.
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Add Educational Comment
+      if: steps.security-analysis.outputs.has_issues == 'true'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issueNumber = context.issue.number;
+          const educationalContent = `${{ steps.security-analysis.outputs.educational_content }}`;
+          
+          if (educationalContent) {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `## 🎓 RSOLV Educational Insight\n\n${educationalContent}`
+            });
+          }

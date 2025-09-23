@@ -1,0 +1,1955 @@
+[
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "8a855330-a481-4a34-9c5c-78068ad5bc42"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "60dbb6ee-109a-4468-b8cd-4c854f536fd0"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "0ecd9ec5-a4e6-4948-9df4-240d80ee85d6"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "c7bceb52-ad11-414a-b95e-af461e05042d"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "fe34d5c5-357f-4520-96aa-dddedbe62a6a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "678248e1-fefa-474c-a732-f7faba17975d"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "685f9582-0f6b-4128-ab68-4ce37cc92850"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "7782be5b-a809-4999-aca3-2bed73b3cf0a"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "8651a785-ade3-4301-8f46-c1ac15b60164"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "285d54c0-d50d-434d-b05a-bd3c12f40f36"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "297fa103-1331-4fa7-ab65-9b91b03f754c"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "9c3f6e17-7a4e-4d09-83ab-e448dd934177"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "7d01d3a1-809f-4cc0-a703-7e5f302ee265"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "a562c67b-4e39-455e-8b4c-df848da9fb8a"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "4274ee8d-23b0-47e1-8119-7d3fad8a4fe1"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "584a0fe3-112c-4989-a4f3-cd8ccd97729d"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "b9130d78-1218-47ef-b88b-2328e3604d04"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "e43bc396-18f4-4864-8376-34465e068847"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "23eb54e9-6178-4693-b26d-333ab7c43c3a"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "e5a6dcbb-e1e2-4907-8fd0-e1abe870fd89"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "ee8ac3a1-d8f5-40ad-80e2-e4b22704d70a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "22fdb203-8777-4def-b5aa-500e7c737499"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "c643aa42-90a4-4466-a7a2-ee5d7466286a"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "2637f269-ce2d-4405-8060-d9b7e9e35c44"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "7e65f7fa-cd66-4a35-9f3d-40fdaa05e12b"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "9cbc52c8-3735-40f3-ace1-8982ce61bcd9"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "48d5fd53-5d1f-4185-9464-9fba497558f3"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "89297ea6-691d-4e1e-9482-d7f6ed5c06e2"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "04f464e6-8bc4-47ac-9fc3-0eb29d7c7892"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "81235e39-8b00-4e38-9dff-b9610089b051"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "80a06ca8-aae7-41c1-82d0-7581816e485a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "fa684ac2-4930-49fa-b566-71f85016fc48"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "9f92417a-8f7b-4060-8aeb-840b1dc2896d"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "fc1bc85e-2270-46ac-a681-e32912297837"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "5d7c5915-0b4a-4261-82a5-49cc691836ff"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "b2c3fef6-ec44-48c6-8a40-201e57e1b01b"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "3474218b-5776-4c01-9ca3-08a6fced6c29"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "3c41000e-55e8-4a96-bd0f-13717ab5b403"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "6f170a8d-6aeb-4a85-9986-78d78be945cc"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "25d86f56-6683-49c4-80bb-9ecef7c10ead"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "05054452-0566-4d7f-ba39-319beda6ed7a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "2902437d-8310-4648-93b6-477db03f26a9"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "3050093a-d1e7-4f4a-bcf7-e2b6ba2ee142"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "2513f438-0ce5-4f06-8f48-f7e6e6ca5cc1"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "f44aea84-aa72-41dd-bd4f-979d5a6e6966"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "d5f332e9-d2c4-4295-9461-3ec4f082b547"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "f9daafba-5b4e-4e59-9dee-d5c71c448cba"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "0a22e37c-5e93-4ed5-894e-70f3e628d545"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "12049ee2-7b09-4363-b57b-bb8ee45abbca"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "12d6867f-4a7d-48e2-9ab8-17bdae5106a6"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "b10843b9-b5f4-4bd8-9544-a73245453cd4"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "d3ef28c7-0a35-48cd-88ae-d5c8daf090d2"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "6a62c518-6bd7-46b0-9071-a51b5cddcfb4"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "0f9bf2c3-f5f6-4536-a9a7-2b0605d6fd62"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "7d40ed48-ddb5-4b6e-a742-d5803beb8012"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "471d96bd-d911-4283-9000-04e90b59c378"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "12df29ec-55a2-4451-83b1-51249dc4b17a"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "f908c855-a409-4320-b361-1832af6a3471"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "6176def1-4e0c-4607-8fb5-3fd309ad83e0"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "89845a35-4c3a-401e-aec5-e2a15c3094f4"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "b680cf7a-df21-4a49-8f0a-5627d23c394e"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "19d84345-b995-46c5-a047-666f5f1dd453"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "23eb7573-e2d4-4866-be2e-4ade5a29dc4b"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "1aaa15c8-9e42-41fe-916f-9ce612917389"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "7952ff42-aefa-4839-875d-b92665f49e44"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "15ba473c-e806-492a-bb73-55865c1006a4"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "5b4b6209-5271-4b9c-842e-592fa61053c0"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "e8138172-30d4-4e91-be22-17434d704301"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "d9e56336-1754-489a-b341-e7cc38de6131"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "757ee994-b6d3-4e89-9362-794967f86816"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "89e81d43-210e-4121-a339-46b4225890be"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "ff8fff3c-a405-451d-965c-695a2b95420f"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "2e5efcac-3131-4bcd-b78e-13ef4f7c5fb9"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "848678f6-5521-4b44-8a7e-25c618486039"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "ef2dc9ba-03dc-41ac-9389-8863bf8d5efe"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "1d122d1c-5185-44a8-bd73-34f30a93da04"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "dab95e68-0967-4241-9d9a-235fc83ec08d"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "0028017d-2cae-48c7-a094-0752216c0ee9"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "c851644a-9957-440e-9bd5-eeb718b36154"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "a7f0a165-256d-4748-bc1e-b7940d5d8977"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "9e9fa6fe-a062-406c-8212-22cc7e1107b9"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "cc81edec-d51a-4c7e-8d53-34c29067e717"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "b4c17a11-2b14-4ac8-bd2f-dbd698c503c6"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "12c9c34d-2c83-492c-b2e5-7fccc8618048"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "82c6b7bb-c3c9-4e9b-8645-f7c4ad5fdb9a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "249d1a72-8a7d-44ed-abe3-a2831f3da046"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "d5d76ed2-36c3-42bc-81e8-df7aae082c9b"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "667c23a6-cddf-4d78-9d0a-fda69301403e"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "a23a2de0-e5ad-4082-b14c-b25746909166"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "9441e1ff-4f1c-4169-8caa-350c67aabf7e"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "3508867d-e1cb-401d-b95c-d51526a6e994"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "69d58da1-f6bf-47d2-8d40-4c72f5022764"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "04c19099-e800-43c1-b56b-a70b30002384"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "16a41a47-adc8-465c-803e-3be2edf9ec82"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "6200219d-5f58-4930-a66a-0376612d8939"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "52291d7a-aabd-4641-978f-aeb63acf1700"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "5f7fadbb-cea7-452e-b2da-443ebb79a395"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "9efc0eb2-ff2f-4369-9639-6ab591c8712d"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "5ad4d089-8e7b-4286-905b-387a8fabfd93"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "d59586be-84bd-4829-a1ae-d9d572b4c4f8"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-28T15:30:00Z",
+    "type": "review",
+    "content": "The solution looks good overall, but I would suggest using more error handling around the authentication check.",
+    "context": {
+      "file": "src/auth/validator.js",
+      "lineNumber": 42
+    },
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "e33ebb13-3f9c-4ec6-b38e-e0412de2801a"
+  },
+  {
+    "issueId": "123",
+    "prId": "456",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-28T16:45:00Z",
+    "type": "comment",
+    "content": "The input sanitization approach is not secure enough. Please use a proper escaping library instead of this custom regex.",
+    "context": {
+      "file": "src/utils/sanitizer.js",
+      "lineNumber": 27
+    },
+    "sentiment": "negative",
+    "actionTaken": "modified",
+    "id": "cca3410e-c795-48c0-a6ee-ecb72a09e790"
+  },
+  {
+    "issueId": "124",
+    "prId": "457",
+    "reviewer": {
+      "id": "user-1",
+      "name": "Jane Expert",
+      "role": "senior-developer"
+    },
+    "timestamp": "2025-04-29T09:15:00Z",
+    "type": "edit",
+    "content": "Updated the error message to be more user-friendly",
+    "context": {
+      "file": "src/errors/handlers.js",
+      "lineNumber": 53
+    },
+    "sentiment": "neutral",
+    "actionTaken": "modified",
+    "modifications": {
+      "before": "throw new Error('Authentication failed with error code ' + errorCode);",
+      "after": "throw new Error('Unable to authenticate. Please check your credentials and try again.');"
+    },
+    "id": "94e2076f-1aba-41fb-85f1-5df0deba54e2"
+  },
+  {
+    "issueId": "125",
+    "prId": "458",
+    "reviewer": {
+      "id": "user-3",
+      "name": "Alice QA",
+      "role": "qa-engineer"
+    },
+    "timestamp": "2025-04-29T11:30:00Z",
+    "type": "approve",
+    "content": "Great fix, this resolves the issue completely. I particularly like how you've added tests for all edge cases.",
+    "context": {},
+    "sentiment": "positive",
+    "actionTaken": "accepted",
+    "id": "0d131f8a-ed93-4bec-a245-d02146919099"
+  },
+  {
+    "issueId": "126",
+    "prId": "459",
+    "reviewer": {
+      "id": "user-2",
+      "name": "John Reviewer",
+      "role": "security-expert"
+    },
+    "timestamp": "2025-04-29T14:45:00Z",
+    "type": "reject",
+    "content": "This solution doesn't address the core issue with the rate limiting. Please reconsider the approach.",
+    "context": {},
+    "sentiment": "negative",
+    "actionTaken": "rejected",
+    "id": "b08bd1b0-642b-469c-b640-81bacb51170b"
+  }
+]

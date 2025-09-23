@@ -1,0 +1,18 @@
+{
+  "name": "sample-app",
+  "version": "1.0.0",
+  "description": "Sample application for testing RSOLV context gathering",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.5",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}

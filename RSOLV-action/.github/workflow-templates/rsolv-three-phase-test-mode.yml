@@ -1,0 +1,121 @@
+# RSOLV Three-Phase Workflow with Test Mode
+#
+# This workflow template demonstrates the complete RSOLV three-phase process:
+# 1. SCAN - Detect vulnerabilities using AST analysis
+# 2. VALIDATE - Generate RED tests that fail on vulnerable code
+# 3. MITIGATE - Fix vulnerabilities using Claude Code AI
+#
+# Test Mode Features:
+# - Creates PRs even when validation fails (for inspection)
+# - Useful for deliberate vulnerability repos like NodeGoat
+# - Prevents rollback of attempted fixes in test mode
+# - Marks PRs with [TEST MODE] prefix when validation failed
+
+name: RSOLV Three-Phase Security Fix (Test Mode)
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_issues:
+        description: 'Maximum number of issues to process'
+        required: false
+        default: '2'
+        type: string
+  push:
+    branches:
+      - main
+      - develop
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+jobs:
+  rsolv-three-phase:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Use a PAT if available for better API limits
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Run RSOLV Three-Phase Workflow
+        uses: RSOLV-dev/rsolv-action@v3.7.34
+        with:
+          # RSOLV API key for accessing vulnerability patterns
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+
+          # Run all three phases
+          mode: 'full'
+
+          # Limit issues processed (optional)
+          max_issues: ${{ github.event.inputs.max_issues || '2' }}
+
+          # Enable educational PR content
+          educational_pr: 'true'
+
+        env:
+          # GitHub token for creating PRs
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+
+          # Enable test mode - creates PRs even when validation fails
+          # Useful for deliberate vulnerability repos or when tests have false positives
+          RSOLV_TESTING_MODE: 'true'
+
+          # Enable debug logging (optional)
+          RSOLV_DEBUG: 'false'
+
+          # Use Claude Code with vended credentials
+          AI_PROVIDER: 'claude-code'
+          USE_VENDED_CREDENTIALS: 'true'
+
+          # Disable if you don't want educational content in PRs
+          # RSOLV_EDUCATIONAL_PR: 'false'
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## RSOLV Three-Phase Workflow Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Mode Enabled" >> $GITHUB_STEP_SUMMARY
+          echo "- PRs created even when validation fails" >> $GITHUB_STEP_SUMMARY
+          echo "- Failed validations marked with [TEST MODE] prefix" >> $GITHUB_STEP_SUMMARY
+          echo "- Useful for inspecting attempted fixes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the created PRs for security fixes." >> $GITHUB_STEP_SUMMARY
+
+# Configuration Notes:
+#
+# Required Secrets:
+# - RSOLV_API_KEY: Your RSOLV API key (get one at https://rsolv.dev)
+# - GH_PAT (optional): GitHub Personal Access Token for better API limits
+#
+# Test Mode Behavior:
+# When RSOLV_TESTING_MODE is enabled:
+# 1. Validation failures don't prevent PR creation
+# 2. PRs are prefixed with [TEST MODE] when validation failed
+# 3. PR body includes warning about validation failure
+# 4. Attempted fixes are preserved for inspection
+#
+# This is particularly useful for:
+# - Deliberately vulnerable applications (like NodeGoat)
+# - When validation tests have false positives
+# - Debugging fix generation issues
+# - Learning from attempted fixes that didn't pass validation
+#
+# Phases Explained:
+# 1. SCAN: Uses AST analysis to detect vulnerabilities with high precision
+# 2. VALIDATE: Generates tests that fail on vulnerable code (RED tests)
+# 3. MITIGATE: Uses Claude Code to fix vulnerabilities, guided by the tests
+#
+# The three-phase approach ensures:
+# - High-confidence vulnerability detection (AST-based)
+# - Test-driven fixes (RED-GREEN-REFACTOR)
+# - Minimal false positives
+# - Educational PR content to help developers understand the fixes

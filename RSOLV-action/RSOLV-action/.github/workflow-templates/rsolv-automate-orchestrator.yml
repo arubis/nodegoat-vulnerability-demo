@@ -1,0 +1,102 @@
+# RSOLV Automated Orchestration Workflow
+#
+# This workflow orchestrates the complete validation and mitigation flow
+# when the rsolv:automate label is applied to an issue.
+#
+# Flow:
+#   1. Validation phase - AST analysis to reduce false positives
+#   2. Mitigation phase - Generate fixes if validation passes
+#
+# The rsolv:automate label means "automate everything" - validate then fix
+
+name: RSOLV Automate Orchestrator
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to process'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  orchestrate:
+    name: Orchestrate Validation and Fix
+    runs-on: ubuntu-latest
+    if: |
+      (github.event.label.name == 'rsolv:automate') ||
+      (github.event_name == 'workflow_dispatch')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Phase 2 - Validation
+        id: validate
+        uses: RSOLV-dev/rsolv-action@main
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'validate'
+          issue_number: ${{ github.event.issue.number || inputs.issue_number }}
+          enable_ast_validation: 'true'
+          enable_security_analysis: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RSOLV_LOG_LEVEL: 'info'
+
+      - name: Check Validation Results
+        id: check_validation
+        run: |
+          echo "🔍 Validation completed"
+          # Check if validation passed (you can customize this logic)
+          # For now, we'll proceed if validation step succeeded
+          echo "validation_passed=true" >> $GITHUB_OUTPUT
+
+      - name: Add Validated Label
+        if: steps.check_validation.outputs.validation_passed == 'true'
+        run: |
+          gh issue edit ${{ github.event.issue.number || inputs.issue_number }} \
+            --add-label "rsolv:validated" \
+            --repo ${{ github.repository }} || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Phase 3 - Mitigation
+        if: steps.check_validation.outputs.validation_passed == 'true'
+        id: mitigate
+        uses: RSOLV-dev/rsolv-action@main
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'mitigate'
+          issue_number: ${{ github.event.issue.number || inputs.issue_number }}
+          use_git_based_editing: 'true'
+          use_structured_phases: 'true'
+          enable_educational_pr: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RSOLV_LOG_LEVEL: 'info'
+
+      - name: Final Status
+        if: always()
+        run: |
+          echo "📊 Orchestration Summary:"
+          echo "- Issue: #${{ github.event.issue.number || inputs.issue_number }}"
+          echo "- Validation: ${{ steps.validate.outcome }}"
+          echo "- Mitigation: ${{ steps.mitigate.outcome || 'skipped' }}"
+
+          if [ "${{ steps.mitigate.outcome }}" = "success" ]; then
+            echo "✅ Successfully validated and created fix PR"
+          elif [ "${{ steps.validate.outcome }}" = "success" ]; then
+            echo "✓ Validation passed, mitigation may be pending"
+          else
+            echo "⚠️ Validation did not complete successfully"
+          fi

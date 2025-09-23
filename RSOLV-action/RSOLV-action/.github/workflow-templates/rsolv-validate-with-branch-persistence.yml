@@ -1,0 +1,153 @@
+# RSOLV Validation with Branch Persistence (RFC-058) Template
+#
+# This workflow implements RFC-058 validation branch persistence for test-aware fix generation.
+# When RFC-058 is fully integrated, this workflow will:
+# 1. Create a validation branch named rsolv/validate/issue-{number}
+# 2. Generate RED tests that fail for the vulnerability
+# 3. Commit tests to .rsolv/tests/validation.test.js in the validation branch
+# 4. Store validation branch reference for mitigation phase to use
+#
+# Usage:
+#   1. Add this file to .github/workflows/ in your repository
+#   2. Set up RSOLV_API_KEY secret in your repository settings
+#   3. Trigger via workflow_dispatch with an issue number
+#   4. The mitigation phase can then checkout the validation branch for test-aware fixes
+#
+# Requirements:
+#   - RSOLV_API_KEY secret (get yours at https://rsolv.dev)
+#   - Contents: write permission (CRITICAL for RFC-058 branch creation)
+#   - Issues: write permission for updating validation results
+#   - Pull-requests: write permission for future mitigation PRs
+#
+# IMPORTANT NOTE (September 2025):
+# RFC-058 is implemented in ValidationMode class but not yet integrated into PhaseExecutor.
+# Until the integration is complete, this workflow will only enrich issues without creating branches.
+# See: https://github.com/RSOLV-dev/rsolv-action/issues/xxx for integration status.
+
+name: RSOLV Validate Issue with Branch Persistence
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to validate (e.g., 123)'
+        required: true
+        type: string
+      enable_branch_persistence:
+        description: 'Enable RFC-058 branch persistence (when available)'
+        required: false
+        default: true
+        type: boolean
+
+  issues:
+    types: [labeled]
+
+# CRITICAL: These permissions are required for RFC-058 validation branch persistence
+permissions:
+  contents: write         # REQUIRED for RFC-058: Create validation branches and commit tests
+  issues: write          # REQUIRED: Update issue with validation results
+  pull-requests: write   # REQUIRED: Future mitigation phase PR creation
+
+jobs:
+  validate-with-branch-persistence:
+    name: Validate Issue with Branch Persistence
+    runs-on: ubuntu-latest
+
+    # Only run when rsolv:validate label is added or manual dispatch
+    if: |
+      (github.event.label.name == 'rsolv:validate') ||
+      (github.event_name == 'workflow_dispatch')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history for better context during validation
+          fetch-depth: 0
+          # Use token with write permissions for branch creation
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git for Branch Operations
+        run: |
+          git config --global user.name "RSOLV Validation Bot"
+          git config --global user.email "validation-bot@rsolv.dev"
+          echo "Git configured for RFC-058 branch operations"
+
+      - name: RSOLV Validate with Branch Persistence
+        id: rsolv-validate
+        uses: RSOLV-dev/rsolv-action@main
+        with:
+          # ===== CORE CONFIGURATION =====
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'validate'
+          issue_number: ${{ github.event.issue.number || inputs.issue_number }}
+
+          # ===== RFC-058 CONFIGURATION =====
+          enable_ast_validation: 'true'      # Enable AST validation for accuracy
+          use_structured_phases: 'true'      # Enable structured validation phase
+          enable_enhanced_context: 'true'    # Provide enhanced context for test generation
+
+          # ===== VALIDATION-SPECIFIC SETTINGS =====
+          enable_security_analysis: 'true'   # Enable AI-powered security analysis
+
+          # Note: When RFC-058 integration is complete, these additional parameters will be available:
+          # enable_branch_persistence: ${{ inputs.enable_branch_persistence || 'true' }}
+          # validation_branch_prefix: 'rsolv/validate'
+          # test_file_path: '.rsolv/tests/validation.test.js'
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # ===== DEBUG CONFIGURATION =====
+          RSOLV_LOG_LEVEL: 'debug'           # Enable debug logging for troubleshooting
+
+          # ===== RFC-058 ENVIRONMENT VARIABLES =====
+          # These will be used when RFC-058 integration is complete:
+          RSOLV_ENABLE_BRANCH_PERSISTENCE: ${{ inputs.enable_branch_persistence || 'true' }}
+          RSOLV_VALIDATION_BRANCH_PREFIX: 'rsolv/validate'
+
+      # ===== POST-VALIDATION STEPS =====
+      - name: Check for Validation Branch
+        id: check-branch
+        run: |
+          issue_num="${{ github.event.issue.number || inputs.issue_number }}"
+          branch_name="rsolv/validate/issue-${issue_num}"
+
+          if git ls-remote --heads origin "$branch_name" | grep -q "$branch_name"; then
+            echo "✅ RFC-058 validation branch created: $branch_name"
+            echo "validation_branch_created=true" >> $GITHUB_OUTPUT
+            echo "validation_branch_name=$branch_name" >> $GITHUB_OUTPUT
+          else
+            echo "ℹ️  RFC-058 integration pending - validation branch not created"
+            echo "validation_branch_created=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validation Branch Summary
+        run: |
+          echo "🔍 RSOLV Validation Complete"
+          echo ""
+          echo "📋 Issue Number: ${{ github.event.issue.number || inputs.issue_number }}"
+          echo "🌿 Branch Created: ${{ steps.check-branch.outputs.validation_branch_created }}"
+
+          if [ "${{ steps.check-branch.outputs.validation_branch_created }}" = "true" ]; then
+            echo "📂 Validation Branch: ${{ steps.check-branch.outputs.validation_branch_name }}"
+            echo "🧪 Test Location: .rsolv/tests/validation.test.js"
+            echo ""
+            echo "✅ RFC-058 Validation Branch Persistence Active!"
+            echo "🔄 Next: Run mitigation phase to generate test-aware fixes"
+          else
+            echo ""
+            echo "ℹ️  RFC-058 integration is in progress"
+            echo "📝 Issue has been enriched with validation results"
+            echo "🔄 Next: Manually run mitigation phase or wait for RFC-058 completion"
+          fi
+          echo ""
+          echo "🔗 Learn more: https://docs.rsolv.dev/rfc-058-validation-branch-persistence"
+
+      # ===== OPTIONAL: TRIGGER MITIGATION =====
+      - name: Auto-trigger Mitigation (if RFC-058 active)
+        if: steps.check-branch.outputs.validation_branch_created == 'true'
+        run: |
+          echo "🚀 RFC-058 active - validation branch ready for mitigation phase"
+          echo "Consider adding automatic mitigation trigger here"
+          # Future: gh workflow run rsolv-mitigate.yml -f issue_number=${{ github.event.issue.number || inputs.issue_number }}

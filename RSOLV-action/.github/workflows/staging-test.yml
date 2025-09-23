@@ -1,0 +1,39 @@
+name: RSOLV Staging Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_url:
+        description: 'API URL to test against'
+        required: false
+        default: 'https://api.rsolv-staging.com'
+        type: choice
+        options:
+          - 'https://api.rsolv-staging.com'
+          - 'http://localhost:4000'
+      issue_number:
+        description: 'Issue number to process'
+        required: false
+        type: string
+
+jobs:
+  test-staging:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Test RSOLV Action (Staging)
+        uses: ./  # Use local action code
+        with:
+          api_key: ${{ secrets.RSOLV_STAGING_API_KEY || secrets.RSOLV_API_KEY }}
+          api_url: ${{ inputs.api_url }}
+          issue_label: 'rsolv:staging-test'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RSOLV_DEBUG: 'true'

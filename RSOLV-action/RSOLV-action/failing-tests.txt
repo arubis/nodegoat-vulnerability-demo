@@ -1,0 +1,11 @@
+./src/ai/adapters/__tests__/claude-code-integration.test.ts
+./src/ai/adapters/__tests__/claude-code-timeout.test.ts
+./src/ai/__tests__/claude-code.test.ts
+./src/ai/__tests__/client-integration.test.ts
+./src/ai/__tests__/client-with-credentials.test.ts
+./src/ai/__tests__/unified-processor-credentials.test.ts
+./src/config/__tests__/timeout.test.ts
+./src/credentials/__tests__/manager.test.ts
+./src/external/__tests__/api-client.test.ts
+./src/external/__tests__/pr-integration.test.ts
+./src/__tests__/ai/anthropic-vending.test.ts

@@ -1,0 +1,21 @@
+# E2E Test Configuration for Bun
+# This configuration is designed for end-to-end testing without global mocks
+
+[test]
+# No preload file - E2E tests should run without global mocks
+# This ensures real network calls, file system operations, and API integrations
+
+# Extended timeout for E2E tests that involve real API calls
+timeout = 60000
+
+# Disable hot reloading to prevent state leakage
+hot = false
+
+# Reduced memory usage for longer-running E2E tests
+smol = true
+
+# Sequential execution to prevent resource conflicts
+bail = false
+
+# E2E tests should have access to real environment
+# No test isolation as we want to test real integrations

@@ -1,0 +1,14 @@
+# Act configuration for local GitHub Actions testing
+# https://github.com/nektos/act
+
+# Default image to use
+-P ubuntu-latest=catthehacker/ubuntu:act-latest
+
+# Use local secrets file
+--secret-file .secrets.act
+
+# Enable verbose output for debugging
+--verbose
+
+# Use Docker API for better compatibility
+--container-daemon-socket -

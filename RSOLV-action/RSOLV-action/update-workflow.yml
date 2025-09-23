@@ -1,0 +1,24 @@
+name: RSOLV Security Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1' # Weekly on Monday
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: RSOLV Security Scan
+        uses: RSOLV-dev/rsolv-action@v3.1.0
+        with:
+          mode: scan
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,6 @@
+# Tool versions for RSOLV-action project
+# This file is used by asdf to manage tool versions
+# Install asdf: https://asdf-vm.com/guide/getting-started.html
+
+nodejs 20.11.0
+bun 1.2.15

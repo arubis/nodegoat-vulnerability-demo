@@ -1,0 +1,143 @@
+name: RSOLV Three-Phase Security Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug logging'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  # Phase 1: SCAN - Detect vulnerabilities
+  scan:
+    name: "Phase 1: SCAN - Detect Vulnerabilities"
+    runs-on: ubuntu-latest
+    outputs:
+      issues_created: ${{ steps.scan.outputs.issues_created }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: RSOLV Scan - Detect Vulnerabilities
+        id: scan
+        uses: RSOLV-dev/rsolv-action@v3.7.27
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'scan'
+          max_issues: 2  # Limit to 2 issues for demo purposes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: ${{ inputs.debug && 'rsolv:*' || '' }}
+
+      - name: Scan Results Summary
+        run: |
+          echo "✅ Phase 1: SCAN Complete"
+          echo "Issues created: ${{ steps.scan.outputs.issues_created }}"
+          echo "Check the Issues tab for vulnerabilities with 'rsolv:detected' label"
+
+  # Phase 2: VALIDATE - Validate vulnerabilities using AST analysis
+  validate:
+    name: "Phase 2: VALIDATE - AST Validation"
+    runs-on: ubuntu-latest
+    needs: scan
+    if: needs.scan.result == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: RSOLV Validate - AST Analysis
+        id: validate
+        uses: RSOLV-dev/rsolv-action@v3.7.27
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'validate'
+          issue_label: 'rsolv:detected'
+          max_issues: 2  # Validate only 2 issues to keep runtime reasonable
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: ${{ inputs.debug && 'rsolv:*' || '' }}
+          LOG_LEVEL: 'debug'  # Enable debug logging for AI response analysis
+          # Uncomment the following line for testing with known vulnerable repositories
+          # RSOLV_TESTING_MODE: 'true'
+
+      - name: Validation Results Summary
+        run: |
+          echo "✅ Phase 2: VALIDATE Complete"
+          echo "Validated issues have been updated with AST analysis results"
+          echo "False positives have been marked and closed"
+
+  # Phase 3: MITIGATE - Generate fixes using Claude Code
+  mitigate:
+    name: "Phase 3: MITIGATE - Generate Fixes"
+    runs-on: ubuntu-latest
+    needs: [scan, validate]
+    if: needs.scan.result == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Git for PR Creation
+        run: |
+          git config --global user.name "RSOLV Bot"
+          git config --global user.email "bot@rsolv.dev"
+
+      - name: RSOLV Mitigate - Generate Fixes
+        id: mitigate
+        uses: RSOLV-dev/rsolv-action@v3.7.27
+        with:
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          mode: 'mitigate'
+          issue_label: 'rsolv:validated'
+          max_issues: 2  # Limit to 2 issues for demo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: ${{ inputs.debug && 'rsolv:*' || '' }}
+
+      - name: Mitigation Results Summary
+        run: |
+          echo "✅ Phase 3: MITIGATE Complete"
+          echo "Pull requests have been created for validated vulnerabilities"
+          echo "Check the Pull Requests tab for fix proposals"
+
+  # Final Summary
+  summary:
+    name: "Demo Complete Summary"
+    runs-on: ubuntu-latest
+    needs: [scan, validate, mitigate]
+    if: always()
+    steps:
+      - name: Generate Demo Summary
+        run: |
+          echo "🎉 RSOLV Three-Phase Security Demo Complete!"
+          echo ""
+          echo "## Results Summary:"
+          echo ""
+          echo "### Phase 1: SCAN"
+          echo "- Status: ${{ needs.scan.result }}"
+          echo "- Issues Created: ${{ needs.scan.outputs.issues_created || 'N/A' }}"
+          echo ""
+          echo "### Phase 2: VALIDATE"
+          echo "- Status: ${{ needs.validate.result }}"
+          echo "- Description: AST validation to reduce false positives"
+          echo ""
+          echo "### Phase 3: MITIGATE"
+          echo "- Status: ${{ needs.mitigate.result }}"
+          echo "- Description: Automated fix generation using Claude Code"
+          echo ""
+          echo "## Next Steps:"
+          echo "1. Review created issues in the Issues tab"
+          echo "2. Check validation results (issues updated with AST analysis)"
+          echo "3. Review and merge pull requests with fixes"
+          echo ""
+          echo "## Demo Recording Notes:"
+          echo "- Total runtime: ~5-10 minutes"
+          echo "- All three phases executed automatically"
+          echo "- PRs created programmatically using GitHub Actions"
+          echo "- No manual intervention required"

@@ -1,0 +1,80 @@
+name: Verify Pattern Count
+on:
+  push:
+    paths:
+      - 'src/security/patterns/**'
+      - 'README.md'
+      - 'docs/**'
+  pull_request:
+    paths:
+      - 'src/security/patterns/**'
+      - 'README.md'
+      - 'docs/**'
+
+jobs:
+  verify-counts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+          
+      - name: Count Patterns
+        run: |
+          # Count actual patterns
+          TOTAL=$(grep -r "id:" src/security/patterns/*.ts | grep -v test | wc -l)
+          echo "TOTAL_PATTERNS=$TOTAL" >> $GITHUB_ENV
+          echo "Found $TOTAL total patterns"
+          
+          # Count by file
+          for file in src/security/patterns/*.ts; do
+            if [[ ! "$file" =~ test ]]; then
+              COUNT=$(grep -c "id:" "$file" || echo 0)
+              FILENAME=$(basename "$file" .ts)
+              echo "$FILENAME: $COUNT patterns"
+            fi
+          done
+          
+      - name: Verify README Claims
+        run: |
+          # Check if README contains accurate count
+          README_COUNT=$(grep -o "[0-9]\+ pattern" README.md | head -1 | grep -o "[0-9]\+")
+          if [ "$README_COUNT" != "$TOTAL_PATTERNS" ]; then
+            echo "❌ README claims $README_COUNT patterns but found $TOTAL_PATTERNS"
+            exit 1
+          fi
+          echo "✅ README count matches actual count: $TOTAL_PATTERNS"
+          
+      - name: Update Pattern Inventory
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          # Create a pattern inventory file
+          cat > PATTERN_INVENTORY_VERIFIED.md << EOF
+          # Verified Pattern Inventory
+          
+          Last Updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          Total Patterns: $TOTAL_PATTERNS
+          
+          ## Pattern Distribution
+          $(for file in src/security/patterns/*.ts; do
+            if [[ ! "$file" =~ test ]]; then
+              COUNT=$(grep -c "id:" "$file" || echo 0)
+              FILENAME=$(basename "$file" .ts)
+              echo "- $FILENAME: $COUNT patterns"
+            fi
+          done)
+          
+          ## Verification
+          This count is automatically verified by CI/CD on every commit.
+          EOF
+          
+      - name: Fail if Inflated
+        run: |
+          # Fail if we detect the old inflated count
+          if grep -q "448" README.md docs/**/*.md 2>/dev/null; then
+            echo "❌ Found inflated pattern count (448) in documentation"
+            exit 1
+          fi

@@ -1,0 +1,9 @@
+
+> rsolv-action@0.1.0 test
+> ./run-tests-sharded.sh
+
+Running tests in 4 shards...
+Running shard 1/4...
+blob report written to /home/dylan/dev/rsolv/RSOLV-action/.vitest-reports/blob-1-4.json
+Running shard 2/4...
+blob report written to /home/dylan/dev/rsolv/RSOLV-action/.vitest-reports/blob-2-4.json

@@ -1,0 +1,37 @@
+image: ubuntu/latest
+packages:
+  - curl
+  - git
+  - unzip
+sources:
+  - https://git.sr.ht/~arubis/rsolv-action
+environment:
+  BUN_VERSION: "latest"
+tasks:
+  - setup: |
+      cd rsolv-action
+      echo "Installing Bun runtime..."
+      curl -fsSL https://bun.sh/install | bash
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+      echo "Bun version: $(bun --version)"
+      bun install
+  - lint: |
+      cd rsolv-action
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+      bun run lint
+  - test: |
+      cd rsolv-action
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+      bun test
+  - build: |
+      cd rsolv-action
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+      bun run build
+triggers:
+  - action: email
+    condition: failure
+    to: dylan@arborealstudios.com
