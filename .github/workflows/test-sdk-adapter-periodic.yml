@@ -1,0 +1,87 @@
+name: Test SDK Adapter Compatibility (Periodic)
+
+# Runs weekly to check if Claude Agent SDK Docker issues are resolved
+# Issue tracking: https://github.com/anthropics/claude-code/issues/14464
+
+on:
+  schedule:
+    # Run every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      force_sdk:
+        description: 'Force SDK adapter test (bypasses feature flag)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  test-sdk-adapter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test SDK Adapter Compatibility
+        id: sdk_test
+        continue-on-error: true
+        uses: RSOLV-dev/RSOLV-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Force SDK adapter (v3.8.19+) - bypasses platform feature flag
+          RSOLV_FORCE_SDK_ADAPTER: 'true'
+        with:
+          mode: SCAN
+          rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
+          api_url: 'https://rsolv-staging.com'
+          max_issues: '1'
+
+      - name: Report SDK Test Results
+        run: |
+          if [ "${{ steps.sdk_test.outcome }}" == "success" ]; then
+            echo "## SDK Adapter Test: SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The Claude Agent SDK now works in GitHub Actions containers!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+            echo "1. Update feature flag \`use_legacy_claude_adapter\` to \`false\`" >> $GITHUB_STEP_SUMMARY
+            echo "2. Run full E2E validation" >> $GITHUB_STEP_SUMMARY
+            echo "3. Close tracking issue if confirmed working" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## SDK Adapter Test: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The Claude Agent SDK still has Docker compatibility issues." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Tracking: https://github.com/anthropics/claude-code/issues/14464" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Legacy adapter remains in use (working correctly)." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Create issue if SDK starts working
+        if: steps.sdk_test.outcome == 'success'
+        run: |
+          gh issue create \
+            --title "SDK Adapter Now Working in Docker - Ready for Migration" \
+            --body "The weekly SDK adapter compatibility test has **PASSED**!
+
+          ## What This Means
+          The Claude Agent SDK (\`@anthropic-ai/claude-agent-sdk\`) now works correctly in GitHub Actions containers.
+
+          ## Recommended Actions
+          1. Set feature flag \`use_legacy_claude_adapter\` to \`false\` on staging
+          2. Run full E2E validation on staging
+          3. If successful, update production flag
+          4. Consider removing deprecated legacy adapters (RFC-095)
+
+          ## Test Run
+          - Workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          - Date: $(date -Iseconds)
+
+          /cc @dylan" \
+            --label "rsolv:automation,sdk-migration"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
