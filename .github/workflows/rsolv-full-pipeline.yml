@@ -80,6 +80,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Cache mise runtimes to speed up language runtime installation
+      # Supports: Ruby, Python, PHP, Elixir, Node.js, Java, Go
+      # This directory is mounted into the RSOLV Docker container at /github/home
+      - name: Cache mise runtimes
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/_github_home/.local/share/mise
+          key: mise-${{ runner.os }}-${{ hashFiles('Gemfile', '.ruby-version', '.tool-versions', 'package.json', 'requirements.txt', 'composer.json', 'mix.exs', 'pom.xml') }}
+          restore-keys: |
+            mise-${{ runner.os }}-
+
       - name: RSOLV Validate - AST Analysis
         id: validate
         uses: RSOLV-dev/rsolv-action@v3.8.67
