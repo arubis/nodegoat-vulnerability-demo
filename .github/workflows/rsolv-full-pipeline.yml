@@ -60,7 +60,7 @@ jobs:
 
       - name: RSOLV Scan - Detect Vulnerabilities
         id: scan
-        uses: RSOLV-dev/rsolv-action@v3.8.42  # ⚠️ Use v3.8.42+ (RFC-101 manifest capture + large pom.xml support)
+        uses: RSOLV-dev/rsolv-action@v3.8.43  # ⚠️ Use v3.8.43+ (RFC-101 manifest capture + large pom.xml support)
         with:
           rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
           mode: 'scan'
@@ -86,7 +86,7 @@ jobs:
 
       - name: RSOLV Validate - AST Analysis
         id: validate
-        uses: RSOLV-dev/rsolv-action@v3.8.42
+        uses: RSOLV-dev/rsolv-action@v3.8.43
         with:
           rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
           mode: 'validate'
@@ -118,7 +118,7 @@ jobs:
 
       - name: RSOLV Mitigate - Generate Fixes
         id: mitigate
-        uses: RSOLV-dev/rsolv-action@v3.8.42
+        uses: RSOLV-dev/rsolv-action@v3.8.43
         with:
           rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
           mode: 'mitigate'
@@ -174,7 +174,7 @@ jobs:
 # - Schedule weekly full scans, manual runs for specific issues
 #
 # Troubleshooting:
-# - Workflow hangs: Update to v3.8.42+ (v3.6.x has bugs)
+# - Workflow hangs: Update to v3.8.43+ (v3.6.x has bugs)
 # - No issues created: Check RSOLV_API_KEY is set
 # - Validation fails: Normal for some patterns, issues remain tagged
 # - No PRs created: Check ANTHROPIC_API_KEY is set
