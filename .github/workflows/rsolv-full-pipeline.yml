@@ -58,7 +58,7 @@ jobs:
 
       - name: RSOLV Scan - Vulnerability Detection
         id: scan
-        uses: RSOLV-dev/rsolv-action@v3.8.69
+        uses: RSOLV-dev/rsolv-action@v3.8.70
         with:
           rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
           mode: 'scan'
@@ -93,7 +93,7 @@ jobs:
 
       - name: RSOLV Validate - AST Analysis
         id: validate
-        uses: RSOLV-dev/rsolv-action@v3.8.69
+        uses: RSOLV-dev/rsolv-action@v3.8.70
         with:
           rsolvApiKey: ${{ secrets.RSOLV_API_KEY }}
           mode: 'validate'
